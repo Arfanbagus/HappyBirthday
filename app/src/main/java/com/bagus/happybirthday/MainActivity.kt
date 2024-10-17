@@ -3,7 +3,6 @@ package com.bagus.happybirthday
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,7 +22,6 @@ import com.bagus.happybirthday.ui.theme.HappyBirthdayTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             HappyBirthdayTheme {
                 Scaffold(
@@ -47,24 +45,24 @@ fun BirthdayGreeting(name: String, modifier: Modifier = Modifier) {
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
-        // Menampilkan gambar balon di latar belakang
+        // Menampilkan gambar latar belakang tanpa tonalElevation atau shadow
         Image(
-            painter = painterResource(id = R.drawable.roti_mas), // Tambahkan gambar balon ke drawable
+            painter = painterResource(id = R.drawable.roti_mas), // Tambahkan gambar di drawable
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
-                .clip(RoundedCornerShape(12.dp)) // Sudut melengkung
+                .clip(RoundedCornerShape(12.dp)) // Bentuk melengkung
         )
 
-
-        // Kartu ucapan ulang tahun dengan tonalElevation
+        // Kartu ucapan tanpa tonalElevation atau shadowElevation
         Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            shape = RoundedCornerShape(12.dp),
-            shadowElevation = 8.dp // Elevasi dengan tonal di Material 3
+                .wrapContentSize()
+                .padding(16.dp)
+                .clip(RoundedCornerShape(12.dp)), // Bentuk elegan
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background), // Warna latar belakang elegan
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp) // Hilangkan shadow
         ) {
             Column(
                 modifier = Modifier
@@ -74,11 +72,11 @@ fun BirthdayGreeting(name: String, modifier: Modifier = Modifier) {
             ) {
                 Text(
                     text = "Happy Birthday, $name!",
-                    fontSize = 36.sp,
+                    fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     text = "Wishing you all the best on your special day!",
                     fontSize = 18.sp,
@@ -94,6 +92,6 @@ fun BirthdayGreeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun BirthdayGreetingPreview() {
     HappyBirthdayTheme {
-        BirthdayGreeting(name = "Android")
+        BirthdayGreeting(name = "Bagos")
     }
 }
